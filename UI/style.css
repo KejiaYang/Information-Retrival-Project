@@ -1,0 +1,25 @@
+.div {
+	margin: 20px;
+	background-color: #DCDCDC;
+	width: 70px;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+    display: inline-block;
+}
+/*#div1 {
+	background-color: #DCDCDC;
+	width: 70px;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}*/
+
+.category {
+	/*margin: 10px;*/
+	background-color: #00BFFF;
+	width: 70px;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}
