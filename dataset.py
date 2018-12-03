@@ -44,7 +44,7 @@ def return_all(pos_code, pages, string):
 		response = requests.get(url)
 		if string == True:
 			for j in response.json()["data"]["resumes"]:
-				resume_json += json.dumps(j)
+				resume_json.append(json.dumps(j))
 		else:
 			resume_json += response.json()["data"]["resumes"]
 	return resume_json
@@ -53,15 +53,15 @@ def return_all(pos_code, pages, string):
 if __name__ == '__main__':
 	# resume is a list of dict
 	resume = return_all(48105, 1, True)
-	options = {
-		"firstName": 1,
-		"lastName": 1,
-		"summary": 1,
-		"workExperiences": 1,
-		"educations": 1,
-		"skills": 1,
-		"awards": 1,
-		"militaryBackground": 1
-	}
-	resume = return_fields(94108, 1, True, options)
+	# options = {
+	# 	"firstName": 1,
+	# 	"lastName": 1,
+	# 	"summary": 1,
+	# 	"workExperiences": 1,
+	# 	"educations": 1,
+	# 	"skills": 1,
+	# 	"awards": 1,
+	# 	"militaryBackground": 1
+	# }
+	# resume = return_fields(94108, 1, True, options)
 	# print(resume)
