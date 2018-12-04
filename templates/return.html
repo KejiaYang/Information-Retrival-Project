@@ -68,7 +68,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
   <!-- Product grid -->
-  <div class="w3-row w3-grayscale w3-center">
+  <!-- <div class="w3-row w3-grayscale w3-center">
     <br>
     <p>Drag the cagegories that you think are important into the placeholders</p>
     <p>(put the most important one in placeholder 1)</p>
@@ -79,7 +79,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <img id="drag1" src="../static/images/gpa.png" draggable="true" ondragstart="drag(event)" width="70px" height="50px"> 
     <img id="drag2" src="../static/images/gpa.png" draggable="true" ondragstart="drag(event)" width="70px" height="50px"> 
     <img id="drag3" src="../static/images/gpa.png" draggable="true" ondragstart="drag(event)" width="70px" height="50px">    
-  </div>
+  </div> -->
 
   <!-- Search section -->
   <div class="w3-container w3-padding-32">
@@ -91,8 +91,8 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
   <div class="return">
     <p>
-      {{quote}}
-      <!-- {{qr}} -->
+      {{qr}}
+      {{search}}
     </p>
   </div>
   <footer>
@@ -108,22 +108,45 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
 <script>
-  // $(document).ready( function() {
-
-  // });
   //search bar input variable
   function getQuery() {
     // location.href = "return.html";
     var q = document.getElementById("query").value;
     $.ajax({
       type: "POST",
-        url: "/hello",
-        data: JSON.stringify(q),
-        // contentType: "application/json; charset=utf-8",
-        // dataType: "json",
+        url: "/hello/",
+        data: JSON.stringify({ "text" : q } ),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
         success: function (data) {
-            // alert("success");
-        }
+            alert(JSON.stringify(data));
+          }
+            // url: '/hello/',
+            // data: q,
+            // type: 'get',
+            // // dataType: 'text',
+            // success: function(response) {
+            //     console.log(response);
+            // },
+            // error: function(error) {
+            //     console.log(error);
+            // }
+        //     type:'POST',
+        //     contentType:'application/json;charset-utf-08',
+        //     dataType:'json',
+        //     url:'http://127.0.0.1/hello/',
+        //     data: q,
+        //     success:function (data) {
+        //     var reply=data.reply;
+        //     if (reply=="success")
+        //     {
+        //       return;
+        //     }
+        //     else
+        //     {
+        //       alert("some error ocured in session agent")
+        //     }
+        //   }
         });
     console.log(q);
   }
@@ -131,16 +154,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     var q = document.getElementById("query").value;
       if(e.keyCode === 13){
       //write your specific code from here
-      $.ajax({
-      type: "POST",
-        url: "/hello",
-        data: JSON.stringify(q),
-        // contentType: "application/json; charset=utf-8",
-        // dataType: "json",
-        success: function (data) {
-            // alert("success");
-        }
-        });
         console.log(q);
       }
     return false;
