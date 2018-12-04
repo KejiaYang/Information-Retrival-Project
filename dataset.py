@@ -2,6 +2,7 @@ from pprint import pprint
 from bs4 import BeautifulSoup
 import requests
 import json
+import re
 
 token = "31c0bd7c42ac286e2a28afc502819d77af0204dea39fc65fd6ac173e081e2a6f"
 secret = "Hjg3m7P0blFdslG8NgCFbxORpcqjuwX34C5ns0KFi5OLJXeog185P7VgrmVIXkwD"
@@ -44,7 +45,10 @@ def return_all(pos_code, pages, string):
 		response = requests.get(url)
 		if string == True:
 			for j in response.json()["data"]["resumes"]:
-				resume_json.append(json.dumps(j))
+				str_resume = ""
+				for val in j.values():
+					str_resume += re.sub(r'[^\w\s]','',json.dumps(val))
+				resume_json.append(str_resume)
 		else:
 			resume_json += response.json()["data"]["resumes"]
 	return resume_json
@@ -53,6 +57,7 @@ def return_all(pos_code, pages, string):
 if __name__ == '__main__':
 	# resume is a list of dict
 	resume = return_all(48105, 1, True)
+	print(resume[0])
 	# options = {
 	# 	"firstName": 1,
 	# 	"lastName": 1,
