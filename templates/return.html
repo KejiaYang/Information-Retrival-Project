@@ -47,7 +47,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
   <!-- Search section -->
-  <p>{{bm25}}</p>
+  <!-- <p>{{bm25}}</p> -->
   {% for idx in bm25 %}
     <div class="w3-container w3-padding-32">
       <p>{{idx}}</p>
@@ -68,6 +68,8 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
             <p>{{entry["text"]}}</p>
             <br>
           {% endfor %}
+        <h2>Summary</h2>
+          <p>{{resumes_dict[idx]["summary"]}}</p>
     </div>
     <hr>
   {% endfor %}
