@@ -116,6 +116,6 @@ def retrieval(query):
 # with open('list_of_resumes.pkl', 'rb') as f:
 	# list_of_resumes = pickle.load(f)
 
-resumes_dict, bm25, method2 = retrieval('yingchen')
+# resumes_dict, bm25, method2 = retrieval('yingchen')
 
-print(resumes_dict[bm25[0]]["educations"][0]["school"])
+# print(resumes_dict[bm25[0]]["educations"][0]["school"])
