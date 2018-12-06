@@ -4,6 +4,8 @@ import nltk
 import operator
 import pickle
 
+import dataset as ds
+
 class DocInfo():
 	def __init__(self, list_of_resumes):
 		self.resumes = list_of_resumes
@@ -55,8 +57,8 @@ class DocInfo():
 	def bm25(self, current_doc_idx, query_w, query_term_count, s=0.1):
 		idf_up = self.num_docs + 1
 		idf_down = self.doc_count[query_w]
-		ntf_up = 1 + math.log(1 + math.log(sd.inverted_index[query_w][current_doc_idx] + 1))
-		ntf_down = 1 - s + s * (1.0 * sd.doc_size[current_doc_idx] / sd.avg_dl)
+		ntf_up = 1 + math.log(1 + math.log(self.inverted_index[query_w][current_doc_idx] + 1))
+		ntf_down = 1 - s + s * (1.0 * self.doc_size[current_doc_idx] / self.avg_dl)
 		qtf = query_term_count
 		score = math.log(1.0 * idf_up / idf_down) * (1.0 * ntf_up / ntf_down) * qtf
 		return score
@@ -65,7 +67,7 @@ class DocInfo():
 		ictf = math.log(1.0 * self.num_terms / self.corpus_term_count[query_w])
 		idf = math.log((self.num_docs - self.doc_count[query_w] + 0.5) / (self.doc_count[query_w] + 0.5))
 		poisson_df = 1 - k1 ** (1.0 * -self.corpus_term_count[query_w] / self.num_docs)
-		poisson_ctf = -math.log(1 - 1.0 * self.doc_count[query_w] / sd.num_docs)
+		poisson_ctf = -math.log(1 - 1.0 * self.doc_count[query_w] / self.num_docs)
 		pidf = math.log(1.0 * poisson_df / poisson_ctf + 1)
 		bidf = ictf * idf * pidf
 		
@@ -80,34 +82,40 @@ class DocInfo():
 		score = bidf * TF * QTF
 		return score
 
-with open('list_of_resumes.pkl', 'rb') as f:
-	list_of_resumes = pickle.load(f)
+def retrieval(query, list_of_resumes):
+	sd = DocInfo(list_of_resumes)
+	sd.get_all_info()
 
-sd = DocInfo(list_of_resumes)
-sd.get_all_info()
+	query_words = query.split()
+	
+	bm25_scores = []
+	method2_scores = []
 
-bm25_scores = []
-method2_scores = []
+	for r_idx, r in enumerate(sd.resumes):
+		bm25score = 0
+		method2score = 0
+		for query_w in query_words:
+			query_term_count = query_words.count(query_w)
+			bm25score += sd.bm25(r_idx, query_w, query_term_count)
+			method2score += sd.method2(r_idx, query_w, query_term_count)
+		bm25_scores.append((r_idx, bm25score))
+		method2_scores.append((r_idx, method2score))
 
-query = 'computer science'
-query_words = query.split()
+	bm25_scores = sorted(bm25_scores, key=operator.itemgetter(1), reverse=True)
+	method2_scores = sorted(method2_scores, key=operator.itemgetter(1), reverse=True)
 
-for r_idx, r in enumerate(sd.resumes):
-	bm25score = 0
-	method2score = 0
-	for query_w in query_words:
-		query_term_count = query_words.count(query_w)
-		bm25score += sd.bm25(r_idx, query_w, query_term_count)
-		method2score += sd.method2(r_idx, query_w, query_term_count)
-	bm25_scores.append((r_idx, bm25score))
-	method2_scores.append((r_idx, method2score))
+	bm25_ranking = [i[0] for i in bm25_scores]
+	method2_ranking = [i[0] for i in method2_scores]
 
-bm25_scores = sorted(bm25_scores, key=operator.itemgetter(1), reverse=True)
-method2_scores = sorted(method2_scores, key=operator.itemgetter(1), reverse=True)
+	return bm25_ranking, method2_ranking
 
-bm25_ranking = [i[0] for i in bm25_scores]
-method2_ranking = [i[0] for i in method2_scores]
+# with open('list_of_resumes.pkl', 'rb') as f:
+	# list_of_resumes = pickle.load(f)
 
-print(bm25_ranking)
-print(method2_ranking)
-print(method2_scores)
+list_of_resumes = ds.return_all(48105, 1, True)
+
+rankings = retrieval('computer science', list_of_resumes)
+print('bm25_ranking:')
+print(rankings[0])
+print('method2_ranking:')
+print(rankings[1])
