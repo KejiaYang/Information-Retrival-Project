@@ -6,7 +6,7 @@ import pickle
 
 import dataset as ds
 
-list_of_resumes_dict, list_of_resumes = ds.return_all(48105, 1, True)
+list_of_resumes_dict, list_of_resumes = ds.return_all(94123, 1, True)
 
 class DocInfo():
 	def __init__(self, list_of_resumes):
@@ -114,6 +114,6 @@ def retrieval(query):
 # with open('list_of_resumes.pkl', 'rb') as f:
 	# list_of_resumes = pickle.load(f)
 
-# resumes_dict, bm25, method2 = retrieval('computer')
+resumes_dict, bm25, method2 = retrieval('computer')
 
-# print(resumes_dict[bm25[0]]["firstName"])
+print(resumes_dict[bm25[0]]["educations"][0]["school"])
