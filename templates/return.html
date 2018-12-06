@@ -17,26 +17,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 </style>
 <body class="w3-content" style="max-width:1200px">
 
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
-  <div class="w3-container w3-display-container w3-padding-16">
-    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-    <h3 class="w3-wide"><b><img  src="../static/images/logo.png" style="width:200px;height:200px;"/></b></h3>
-  </div>
-  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-    <a href="#" class="w3-bar-item w3-button">About</a>
-    <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-      How our system works <i class="fa fa-caret-down"></i>
-    </a>
-    <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button">Document Ranking</a>
-      <a href="#" class="w3-bar-item w3-button">Document Recommendation</a>
-      <a href="#" class="w3-bar-item w3-button">Automatic Correction for Search Query</a>
-    </div>
-    <a href="#" class="w3-bar-item w3-button">Team Members</a>
-  </div>
-
-</nav>
 
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
@@ -45,7 +25,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 </header>
 
 <!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<div class="w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:250px">
@@ -64,43 +44,29 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   </div>
 
 
-  <!-- Product grid -->
-  <!-- <div class="w3-row w3-grayscale w3-center">
-    <br>
-    <p>Drag the cagegories that you think are important into the placeholders</p>
-    <p>(put the most important one in placeholder 1)</p>
-    <div class="div" ondrop="drop(event)" ondragover="allowDrop(event)">1</div>
-    <div class="div" ondrop="drop(event)" ondragover="allowDrop(event)">2</div>
-    <div class="div" ondrop="drop(event)" ondragover="allowDrop(event)">3</div>
-    <br>
-    <img id="drag1" src="../static/images/gpa.png" draggable="true" ondragstart="drag(event)" width="70px" height="50px"> 
-    <img id="drag2" src="../static/images/gpa.png" draggable="true" ondragstart="drag(event)" width="70px" height="50px"> 
-    <img id="drag3" src="../static/images/gpa.png" draggable="true" ondragstart="drag(event)" width="70px" height="50px">    
-  </div> -->
+
 
   <!-- Search section -->
   <div class="w3-container w3-padding-32">
-    <h1>First Name Second Name</h1>
-    {{resumes_dict[bm25[0]]["firstName"]}}
-    <!-- <input id="query" onkeypress="handle(event)" type="search" placeholder="Type in the name, region, skills... anything you want to search!" style="width:90%">
-    <button type="button" onclick="getQuery()"><i class="fa fa-search"></i></button> -->
-    <!-- <button type="button" class="w3-button w3-margin-bottom"><img  src="../static/images/search_icon.png" style="width:50px;height:50px;"/></button> -->
+    <h1>{{resumes_dict[bm25[0]]["firstName"]}} {{resumes_dict[bm25[0]]["lastName"]}}</h1>
+    
+    <p> here </p>
   </div>
+
   <div class="w3-container w3-padding-32">
-    <h1>First Name Second Name</h1>
-    {{resumes_dict[bm25[1]]["firstName"]}}
+    <h1>{{resumes_dict[bm25[1]]["firstName"]}} Second Name</h1>
   </div>
+
   <div class="w3-container w3-padding-32">
-    <h1>First Name Second Name</h1>
-    {{resumes_dict[bm25[2]]["firstName"]}}
+    <h1>{{resumes_dict[bm25[2]]["firstName"]}} Second Name</h1>
   </div>
+
   <div class="w3-container w3-padding-32">
-    <h1>First Name Second Name</h1>
-    {{resumes_dict[bm25[3]]["firstName"]}}
+    <h1>{{resumes_dict[bm25[3]]["firstName"]}} Second Name</h1>
   </div>
+  
   <div class="w3-container w3-padding-32">
-    <h1>First Name Second Name</h1>
-    {{resumes_dict[bm25[4]]["firstName"]}}
+    <h1>{{resumes_dict[bm25[4]]["firstName"]}} Second Name</h1>
   </div>
 
   <footer>
@@ -116,56 +82,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
 <script>
-  //search bar input variable
-  function getQuery() {
-    // location.href = "return.html";
-    var q = document.getElementById("query").value;
-    $.ajax({
-      type: "POST",
-        url: "/hello/",
-        data: JSON.stringify({ "text" : q } ),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            alert(JSON.stringify(data));
-          }
-            // url: '/hello/',
-            // data: q,
-            // type: 'get',
-            // // dataType: 'text',
-            // success: function(response) {
-            //     console.log(response);
-            // },
-            // error: function(error) {
-            //     console.log(error);
-            // }
-        //     type:'POST',
-        //     contentType:'application/json;charset-utf-08',
-        //     dataType:'json',
-        //     url:'http://127.0.0.1/hello/',
-        //     data: q,
-        //     success:function (data) {
-        //     var reply=data.reply;
-        //     if (reply=="success")
-        //     {
-        //       return;
-        //     }
-        //     else
-        //     {
-        //       alert("some error ocured in session agent")
-        //     }
-        //   }
-        });
-    console.log(q);
-  }
-  function handle(e){
-    var q = document.getElementById("query").value;
-      if(e.keyCode === 13){
-      //write your specific code from here
-        console.log(q);
-      }
-    return false;
-  }
   // Accordion 
   function myAccFunc() {
       var x = document.getElementById("demoAcc");
@@ -189,22 +105,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   function w3_close() {
       document.getElementById("mySidebar").style.display = "none";
       document.getElementById("myOverlay").style.display = "none";
-  }
-
-
-  // Drag and drop
-  function allowDrop(ev) {
-      ev.preventDefault();
-  }
-
-  function drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
-  }
-
-  function drop(ev) {
-      ev.preventDefault();
-      var data = ev.dataTransfer.getData("text");
-      ev.target.appendChild(document.getElementById(data));
   }
   </script>
 
