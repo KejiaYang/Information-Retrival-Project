@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 class Q():
   qr = "NO QUERY"
-  
+
 qr_global = Q()
 
 #@app.route("/hello/<string:name>")
@@ -23,21 +23,15 @@ def hello():
 
 @app.route("/hello/return.html",methods=['GET', 'POST'])
 def rt():
-    # quotes = [ "'If people do not believe that mathematics is simple, it is only because they do not realize how complicated life is.' -- John Louis von Neumann ",
-    #            "'Computer science is no more about computers than astronomy is about telescopes' --  Edsger Dijkstra ",
-    #            "'To understand recursion you must first understand recursion..' -- Unknown",
-    #            "'You look at things that are and ask, why? I dream of things that never were and ask, why not?' -- Unknown",
-    #            "'Mathematics is the key and door to the sciences.' -- Galileo Galilei",
-    #            "'Not everyone will understand your journey. Thats fine. Its not their journey to make sense of. Its yours.' -- Unknown"  ]
-    # randomNumber = randint(0,len(quotes)-1) 
-    # quote = quotes[randomNumber]
-    # qr = "NO QUERY"
-    # if request.method == 'POST':
-    #   print ("ifffffff")
-    #   qr = request.get_json(force=True)
-    #   print(qr)
-
-    # resume = return_all(48105, 1, True)
+    quotes = [ "'If people do not believe that mathematics is simple, it is only because they do not realize how complicated life is.' -- John Louis von Neumann ",
+               "'Computer science is no more about computers than astronomy is about telescopes' --  Edsger Dijkstra ",
+               "'To understand recursion you must first understand recursion..' -- Unknown",
+               "'You look at things that are and ask, why? I dream of things that never were and ask, why not?' -- Unknown",
+               "'Mathematics is the key and door to the sciences.' -- Galileo Galilei",
+               "'Not everyone will understand your journey. Thats fine. Its not their journey to make sense of. Its yours.' -- Unknown"  ]
+    randomNumber = randint(0,len(quotes)-1) 
+    quote = quotes[randomNumber]
+    resume = return_all(48105, 1, True)
     print(qr_global.qr)
     return render_template(
         'return.html',**locals())
