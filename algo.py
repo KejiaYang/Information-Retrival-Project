@@ -10,7 +10,7 @@ list_of_resumes_dict, list_of_resumes = ds.return_all(94123, 1, True)
 
 class DocInfo():
 	def __init__(self, list_of_resumes):
-		self.resumes = list_of_resumes
+		self.resumes = [i.lower() for i in list_of_resumes]
 		self.inverted_index = collections.defaultdict(lambda: collections.defaultdict(int))		
 		self.all_terms = set()
 		self.num_terms = 0
@@ -58,23 +58,23 @@ class DocInfo():
 
 	def bm25(self, current_doc_idx, query_w, query_term_count, s=0.1):
 		idf_up = self.num_docs + 1
-		idf_down = self.doc_count[query_w]
-		ntf_up = 1 + math.log(1 + math.log(self.inverted_index[query_w][current_doc_idx] + 1))
+		idf_down = (self.doc_count[query_w] + 1) # smoothed
+		ntf_up = 1 + math.log(1 + math.log(self.inverted_index[query_w][current_doc_idx] + 1)) # smoothed
 		ntf_down = 1 - s + s * (1.0 * self.doc_size[current_doc_idx] / self.avg_dl)
 		qtf = query_term_count
 		score = math.log(1.0 * idf_up / idf_down) * (1.0 * ntf_up / ntf_down) * qtf
 		return score
 
 	def method2(self, current_doc_idx, query_w, query_term_count, k1 = 1.2, b = 0.75, k3 = 500):
-		ictf = math.log(1.0 * self.num_terms / self.corpus_term_count[query_w])
+		ictf = math.log(1.0 * self.num_terms / (self.corpus_term_count[query_w] + 1)) # smoothed
 		idf = math.log((self.num_docs - self.doc_count[query_w] + 0.5) / (self.doc_count[query_w] + 0.5))
-		poisson_df = 1 - k1 ** (1.0 * -self.corpus_term_count[query_w] / self.num_docs)
-		poisson_ctf = -math.log(1 - 1.0 * self.doc_count[query_w] / self.num_docs)
+		poisson_df = 1 - k1 ** (1.0 * -(self.corpus_term_count[query_w] + 1) / self.num_docs) # smoothed
+		poisson_ctf = -math.log(1 - 1.0 * (self.doc_count[query_w] + 1) / self.num_docs) # smoothed
 		pidf = math.log(1.0 * poisson_df / poisson_ctf + 1)
 		bidf = ictf * idf * pidf
 		
-		tf_up = (k1 + 1) * (self.inverted_index[query_w][current_doc_idx] + 1)
-		tf_down = k1 * (1 - b + b * 1.0 * self.doc_size[query_w] / self.avg_dl) + (self.inverted_index[query_w][current_doc_idx] + 1)
+		tf_up = (k1 + 1) * (self.inverted_index[query_w][current_doc_idx] + 1) # smoothed
+		tf_down = k1 * (1 - b + b * 1.0 * self.doc_size[query_w] / self.avg_dl) + (self.inverted_index[query_w][current_doc_idx] + 1) # smoothed
 		TF = 1.0 * tf_up / tf_down
 
 		qtf_up = (k3 + 1) * query_term_count
@@ -87,6 +87,8 @@ class DocInfo():
 def retrieval(query):
 	sd = DocInfo(list_of_resumes)
 	sd.get_all_info()
+
+	query = query.lower()
 
 	query_words = query.split()
 	
@@ -114,6 +116,6 @@ def retrieval(query):
 # with open('list_of_resumes.pkl', 'rb') as f:
 	# list_of_resumes = pickle.load(f)
 
-resumes_dict, bm25, method2 = retrieval('computer')
+resumes_dict, bm25, method2 = retrieval('yingchen')
 
 print(resumes_dict[bm25[0]]["educations"][0]["school"])
