@@ -43,6 +43,7 @@ def return_all(pos_code, pages, string):
 	for i in range(pages):
 		url = url_ori + token + "&v=1&l=" + str(pos_code) + "&pretty=1" + "&start=" + str((i - 1) * 50)
 		response = requests.get(url)
+		resume = response.json()["data"]["resumes"]
 		if string == True:
 			for j in response.json()["data"]["resumes"]:
 				str_resume = ""
@@ -51,7 +52,7 @@ def return_all(pos_code, pages, string):
 				resume_json.append(str_resume)
 		else:
 			resume_json += response.json()["data"]["resumes"]
-	return resume_json
+	return resume, resume_json
 
 
 if __name__ == '__main__':

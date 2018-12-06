@@ -33,7 +33,7 @@ def rt():
     # randomNumber = randint(0,len(quotes)-1) 
     # quote = quotes[randomNumber]
     # resume = return_all(48105, 1, True)
-    rankings = retrieval(qr_global.qr)
+    resumes_dict, bm25, method2 = retrieval(qr_global.qr)
     print(qr_global.qr)
     return render_template(
         'return.html',**locals())
