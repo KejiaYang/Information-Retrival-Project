@@ -1,5 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort, jsonify
 from random import randint
+from dataset import return_all
  
 app = Flask(__name__)
 
@@ -20,6 +21,7 @@ def hello():
       qr = request.get_json(force=True)
       print(qr)
 
+    resume = return_all(48105, 1, True)
     return render_template(
         'idx.html',**locals())
 
