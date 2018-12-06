@@ -47,20 +47,25 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
   <!-- Search section -->
+  <p>{{bm25}}</p>
   {% for idx in bm25 %}
     <div class="w3-container w3-padding-32">
-      <h1>{{bm25[idx]}}</h1>
-      <h1>{{resumes_dict[bm25[idx]]["firstName"]}} {{resumes_dict[bm25[idx]]["lastName"]}}</h1>
+      <p>{{idx}}</p>
+      <h1>{{resumes_dict[idx]["firstName"]}} {{resumes_dict[idx]["lastName"]}}</h1>
         <h2>Education</h2>
-          {% for entry in resumes_dict[bm25[idx]]["educations"] %}
+          {% for entry in resumes_dict[idx]["educations"] %}
             <p><b>{{entry["school"]}}</b>, {{entry["location"]}}</p>
             <p>{{entry["field"]}}</p>
             <br>
           {% endfor %}
-          <br>
         <h2>Work Experience</h2>
-          {% for entry in resumes_dict[bm25[idx]]["workExperiences"] %}
+          {% for entry in resumes_dict[idx]["workExperiences"] %}
             <p><b>{{entry["company"]}}</b> {{entry["title"]}}</p>
+            <br>
+          {% endfor %}
+        <h2>Skills</h2>
+          {% for entry in resumes_dict[idx]["skillsList"] %}
+            <p>{{entry["text"]}}</p>
             <br>
           {% endfor %}
     </div>
