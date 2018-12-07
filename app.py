@@ -39,6 +39,10 @@ def rt():
     return render_template(
         'return.html',**locals())
 
+@app.route("/hello/about.html",methods=['GET', 'POST'])
+def about():
+    return render_template(
+        'about.html',**locals())
  
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000, debug=True)
