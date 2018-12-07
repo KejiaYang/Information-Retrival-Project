@@ -49,8 +49,8 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <!-- Search section -->
   <!-- <p>{{bm25}}</p> -->
   {% for idx in bm25 %}
-    <div class="w3-container w3-padding-32">
-      <p>{{idx}}</p>
+    <div class="w3-container w3-padding-32" style="background-color: #F0FFFF">
+      <!-- <p>{{idx}}</p> -->
       <h1>{{resumes_dict[idx]["firstName"]}} {{resumes_dict[idx]["lastName"]}}</h1>
         <h2>Education</h2>
           {% for entry in resumes_dict[idx]["educations"] %}
@@ -65,7 +65,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
           {% endfor %}
         <h2>Skills</h2>
           {% for entry in resumes_dict[idx]["skillsList"] %}
-            <p>{{entry["text"]}}</p>
+            {{entry["text"]}}
             <br>
           {% endfor %}
         <h2>Summary</h2>
@@ -96,9 +96,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
           x.className = x.className.replace(" w3-show", "");
       }
   }
-
-  // Click on the "Jeans" link on page load to open the accordion for demo purposes
-  document.getElementById("myBtn").click();
 
 
   // Script to open and close sidebar
