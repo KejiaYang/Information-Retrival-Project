@@ -34,6 +34,7 @@ def rt():
     # quote = quotes[randomNumber]
     # resume = return_all(48105, 1, True)
     resumes_dict, bm25, method2 = retrieval(qr_global.qr)
+    print(len(resumes_dict))
     print(qr_global.qr)
     return render_template(
         'return.html',**locals())

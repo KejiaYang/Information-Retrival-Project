@@ -40,10 +40,11 @@ def return_fields(pos_code, pages, string, options):
 
 def return_all(pos_code, pages, string):
 	resume_json = []
+	resume = []
 	for i in range(pages):
 		url = url_ori + token + "&v=1&l=" + str(pos_code) + "&pretty=1" + "&start=" + str((i - 1) * 50)
 		response = requests.get(url)
-		resume = response.json()["data"]["resumes"]
+		resume += response.json()["data"]["resumes"]
 		if string == True:
 			for j in response.json()["data"]["resumes"]:
 				str_resume = ""

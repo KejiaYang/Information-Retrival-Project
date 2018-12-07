@@ -6,7 +6,13 @@ import pickle
 
 import dataset as ds
 
-list_of_resumes_dict, list_of_resumes = ds.return_all(94123, 1, True)
+# list_of_resumes_dict, list_of_resumes = ds.return_all(94123, 10, True)
+
+# with open('list_of_resumes.pkl', 'wb') as f:
+# 	pickle.dump(list_of_resumes, f)
+
+# with open('list_of_resumes_dict.pkl', 'wb') as f:
+# 	pickle.dump(list_of_resumes_dict, f)
 
 class DocInfo():
 	def __init__(self, list_of_resumes):
@@ -85,6 +91,14 @@ class DocInfo():
 		return score
 
 def retrieval(query):
+	with open('list_of_resumes.pkl', 'rb') as f:
+		list_of_resumes = pickle.load(f)
+	f.close()
+
+	with open('list_of_resumes_dict.pkl', 'rb') as f:
+		list_of_resumes_dict = pickle.load(f)
+	f.close()
+
 	sd = DocInfo(list_of_resumes)
 	sd.get_all_info()
 
@@ -116,6 +130,7 @@ def retrieval(query):
 # with open('list_of_resumes.pkl', 'rb') as f:
 	# list_of_resumes = pickle.load(f)
 
-# resumes_dict, bm25, method2 = retrieval('yingchen')
+resumes_dict, bm25, method2 = retrieval('yingchen')
+print(len(resumes_dict))
 
 # print(resumes_dict[bm25[0]]["educations"][0]["school"])
