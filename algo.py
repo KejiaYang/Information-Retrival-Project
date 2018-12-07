@@ -6,7 +6,7 @@ import pickle
 
 import dataset as ds
 
-# list_of_resumes_dict, list_of_resumes = ds.return_all(94123, 10, True)
+# list_of_resumes_dict, list_of_resumes = ds.return_all(94123, 40, True)
 
 # with open('list_of_resumes.pkl', 'wb') as f:
 # 	pickle.dump(list_of_resumes, f)
