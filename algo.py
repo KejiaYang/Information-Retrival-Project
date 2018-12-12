@@ -3,19 +3,21 @@ import math
 import nltk
 import operator
 import pickle
+import pprint
 
 import dataset as ds
 
 import gensim
 
-# list_of_resumes_dict, list_of_resumes = ds.return_all(94123, 40, True)
+list_of_resumes_dict, list_of_resumes = ds.return_all(94123, 40, True)
 
-# with open('list_of_resumes.pkl', 'wb') as f:
-# 	pickle.dump(list_of_resumes, f)
+with open('list_of_resumes.pkl', 'wb') as f:
+	pickle.dump(list_of_resumes, f)
 
-# with open('list_of_resumes_dict.pkl', 'wb') as f:
-# 	pickle.dump(list_of_resumes_dict, f)
+with open('list_of_resumes_dict.pkl', 'wb') as f:
+	pickle.dump(list_of_resumes_dict, f)
 
+# Uncomment later
 model = gensim.models.KeyedVectors.load_word2vec_format('../pruned.word2vec.txt', binary=False)
 
 class DocInfo():
@@ -138,9 +140,16 @@ def retrieval(query):
 	return list_of_resumes_dict, bm25_ranking, method2_ranking
 
 # with open('list_of_resumes.pkl', 'rb') as f:
-	# list_of_resumes = pickle.load(f)
+# 	list_of_resumes = pickle.load(f)
+# f.close()
 
-resumes_dict, bm25, method2 = retrieval('yingchen')
-print(len(resumes_dict))
+# with open('list_of_resumes_dict.pkl', 'rb') as f:
+# 	list_of_resumes_dict = pickle.load(f)
+# f.close()
+ 
+# pprint.pprint(list_of_resumes_dict[0])
+
+# resumes_dict, bm25, method2 = retrieval('yingchen')
+# print(len(resumes_dict))
 
 # print(resumes_dict[bm25[0]]["educations"][0]["school"])

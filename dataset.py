@@ -59,7 +59,7 @@ def return_all(pos_code, pages, string):
 if __name__ == '__main__':
 	# resume is a list of dict
 	resume = return_all(48105, 1, True)
-	print(resume[0])
+	print(resume)
 	# options = {
 	# 	"firstName": 1,
 	# 	"lastName": 1,
