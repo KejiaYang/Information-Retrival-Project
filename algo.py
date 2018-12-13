@@ -202,8 +202,8 @@ def retrieval_2(query):
 	method2_scores = [0] * len(resumes_by_fields)
 	
 	for key, val in dict_fields.items():
-		factor = 0.1
-		if key == 'educations':
+		factor = 0.3
+		if key == 'educations' or key == 'workExperiences':
 			factor = 1
 			# print(dict_fields["educations"][0])
 			# print()
